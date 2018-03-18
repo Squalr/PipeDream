@@ -27,32 +27,50 @@
         {
             foreach (MethodInfo methodInfo in typeof(T).GetMethods())
             {
-                ParameterInfo[] parameters = methodInfo.GetParameters();
-
-                // Every method gets it's own pipe
-                NamedPipeServerStream pipe = new NamedPipeServerStream(PipeDream.GenerateMethodPipeName(pipeName, methodInfo.Name), PipeDirection.InOut);
-                pipe.WaitForConnection();
-
                 // Continuously listen on a separate thread for serialize/deserialization over the pipe
                 Task.Run(() =>
                 {
+                    // Every method gets it's own pipe
+                    NamedPipeServerStream pipe = new NamedPipeServerStream(PipeDream.GenerateMethodPipeName(pipeName, methodInfo.Name), PipeDirection.InOut);
+                    pipe.WaitForConnection();
+
+                    ParameterInfo[] parameters = methodInfo.GetParameters();
+
+                    Console.WriteLine(methodInfo.Name + " is awaiting args...");
+
                     while (true)
                     {
-                        Console.WriteLine("Awaiting args...");
-
                         IFormatter formatter = new BinaryFormatter();
                         List<object> args = new List<object>();
 
-                        foreach (ParameterInfo arg in parameters)
+                        if (parameters.Length > 0)
                         {
-                            Console.WriteLine("Server recieved arg: " + arg);
-                            args.Add(formatter.Deserialize(pipe));
+                            foreach (ParameterInfo arg in parameters)
+                            {
+                                object nextArg = formatter.Deserialize(pipe);
+                                args.Add(nextArg);
+                                Console.WriteLine("Server (" + methodInfo.Name + ") recieved arg: " + nextArg);
+                            }
+                        }
+                        else
+                        {
+                            formatter.Deserialize(pipe);
+                            Console.WriteLine("Server (" + methodInfo.Name + ") recieved empty argument");
                         }
 
-                        object result = methodInfo.Invoke(instance, args.ToArray());
+                        if (methodInfo.ReturnType != typeof(void))
+                        {
+                            object result = methodInfo.Invoke(instance, args.ToArray());
 
-                        Console.WriteLine("Server called original function with result: " + result);
-                        formatter.Serialize(pipe, result);
+                            Console.WriteLine("Server called original function with result: " + result);
+                            formatter.Serialize(pipe, result);
+                        }
+                        else
+                        {
+                            methodInfo.Invoke(instance, null);
+                            Console.WriteLine("Server called void function");
+                            formatter.Serialize(pipe, 0);
+                        }
                     }
                 });
             }

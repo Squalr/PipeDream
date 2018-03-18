@@ -44,12 +44,10 @@
                         Process process = Process.GetProcessById(parentProcessId);
 
                         // Could not find process
-                        if (process == null)
+                        if (process == null || process.HasExited)
                         {
                             break;
                         }
-
-                        Console.WriteLine(process);
                     }
                     catch (Exception)
                     {

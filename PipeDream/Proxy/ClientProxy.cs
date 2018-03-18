@@ -49,13 +49,19 @@
             NamedPipeClientStream pipe = this.GetPipe(method);
             IFormatter formatter = new BinaryFormatter();
 
-            foreach (object param in parameters)
+            if (parameters.Length > 0)
             {
-                Console.WriteLine("Param: " + param);
-                formatter.Serialize(pipe, param);
+                foreach (object param in parameters)
+                {
+                    Console.WriteLine("Param: " + param);
+                    formatter.Serialize(pipe, param);
+                }
             }
-
-            Console.WriteLine("WRAPPER INVOKED");
+            else
+            {
+                Console.WriteLine("No parameters");
+                formatter.Serialize(pipe, 0);
+            }
 
             return formatter.Deserialize(pipe);
         }

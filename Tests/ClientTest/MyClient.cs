@@ -33,13 +33,20 @@
             // Initialize 64 bit IPC/RPC
             IMySharedInterface remote64 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName64);
 
-            // Fetch remote objects
+            // Fetch remote objects and print them
             MyObject serverObject64 = remote64?.GetMyRemoteObject("Sam64", 19, 200.4);
             MyObject serverObject64_2 = remote64?.GetMyRemoteObject("aaa", 22, 123.5);
+            string serverString = remote64?.NoParameters();
+            remote64?.VoidMethod();
+            //remote64.MyProperty = 123.0;
+            //remote64.MyProperty += 4.0;
+            //double serverProperty = remote64.MyProperty;
 
             // Print them!
             Console.WriteLine("Server object (64-bit): " + serverObject64?.ToString());
             Console.WriteLine("Server object (64-bit): " + serverObject64_2?.ToString());
+            Console.WriteLine("Server object (64-bit): " + serverString);
+            //Console.WriteLine("Server object (64-bit): " + serverProperty);
 
             // Repeat for 32 bit
             // string pipeName32 = PipeDream.GetUniquePipeName();
@@ -47,6 +54,8 @@
             // IMySharedInterface remote32 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName32);
             // MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32", 420, 69.0);
             // Console.WriteLine("Server object (32-bit): " + serverObject32?.ToString());
+
+            Console.WriteLine("DONE!");
         }
 
         /// <summary>
