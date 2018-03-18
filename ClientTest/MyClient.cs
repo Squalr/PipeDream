@@ -1,11 +1,12 @@
-﻿using Squalr.PipeDream;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-
-namespace ClientTest
+﻿namespace ClientTest
 {
+    using ServerTest;
+    using Squalr.PipeDream;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Reflection;
+
     class MyClient
     {
         /// <summary>
@@ -23,27 +24,29 @@ namespace ClientTest
         /// </summary>
         public MyClient()
         {
-            // Create random pipe names for each 
-            string pipeName32 = PipeDream.GetUniquePipeName();
+            // Create random pipe name
             string pipeName64 = PipeDream.GetUniquePipeName();
 
-            // Start the 32 and 64 bit servers
-            this.StartServer(MyClient.Server32Executable, pipeName32);
+            // Start the 64 bit remote process
             this.StartServer(MyClient.Server64Executable, pipeName64);
 
-            // Create the piping
-            IMySharedInterface remote32 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName32);
+            // Initialize 64 bit IPC/RPC
             IMySharedInterface remote64 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName64);
 
-            // Fetch some objects from the servers
-            MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32", 420, 69.0);
+            // Fetch remote objects
             MyObject serverObject64 = remote64?.GetMyRemoteObject("Sam64", 19, 200.4);
             MyObject serverObject64_2 = remote64?.GetMyRemoteObject("aaa", 22, 123.5);
 
             // Print them!
-            Console.WriteLine("Server object (32-bit): " + serverObject32?.ToString());
             Console.WriteLine("Server object (64-bit): " + serverObject64?.ToString());
             Console.WriteLine("Server object (64-bit): " + serverObject64_2?.ToString());
+
+            // Repeat for 32 bit
+            // string pipeName32 = PipeDream.GetUniquePipeName();
+            // this.StartServer(MyClient.Server32Executable, pipeName32);
+            // IMySharedInterface remote32 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName32);
+            // MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32", 420, 69.0);
+            // Console.WriteLine("Server object (32-bit): " + serverObject32?.ToString());
         }
 
         /// <summary>

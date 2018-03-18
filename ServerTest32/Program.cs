@@ -1,6 +1,6 @@
 ﻿namespace ServerTest32
 {
-    using ClientTest;
+    using ServerTest;
     using System;
 
     class Program

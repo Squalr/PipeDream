@@ -1,6 +1,6 @@
-﻿namespace ClientTest64
+﻿namespace ServerTest64
 {
-    using ClientTest;
+    using ServerTest;
     using System;
 
     class Program

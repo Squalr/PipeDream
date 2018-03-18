@@ -1,12 +1,12 @@
-﻿using Squalr.PipeDream;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace ClientTest
+﻿namespace ServerTest
 {
-    public class MyServer : IMySharedInterface
+    using Squalr.PipeDream;
+    using System;
+    using System.Diagnostics;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    public class MyServer
     {
         /// <summary>
         /// The delay in milliseconds to check if the parent process is still running.
@@ -21,12 +21,9 @@ namespace ClientTest
 
             this.InitializeAutoExit(parentProcessId);
 
-            PipeDream.ServerInitialize<IMySharedInterface>(this, pipeName);
-        }
+            IMySharedInterface instance = new SharedInterfaceImpl();
 
-        public MyObject GetMyRemoteObject(string name, int age, double iq)
-        {
-            return new MyObject(name, age, iq);
+            PipeDream.ServerInitialize<IMySharedInterface>(instance, pipeName);
         }
 
         /// <summary>

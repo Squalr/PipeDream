@@ -1,4 +1,4 @@
-﻿namespace ClientTest
+﻿namespace ServerTest
 {
     public interface IMySharedInterface
     {

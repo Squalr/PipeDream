@@ -1,5 +1,4 @@
-﻿
-namespace ClientTest
+﻿namespace ServerTest
 {
     using System;
 
