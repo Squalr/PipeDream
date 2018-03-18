@@ -1,11 +1,8 @@
-﻿using Dynamitey;
-using ImpromptuInterface;
-using Squalr.PipeDream;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
 using System.Reflection;
+using Squalr.PipeDream;
 
 namespace ClientTest
 {
@@ -21,32 +18,13 @@ namespace ClientTest
         /// </summary>
         private const String Server64Executable = "ServerTest64.dll";
 
-        public interface IMyInterfaceA
-        {
-
-            string Prop1 { get; }
-
-            long Prop2 { get; }
-
-            Guid Prop3 { get; }
-
-            bool Meth1(int x);
-        }
-
         /// <summary>
         /// 
         /// </summary>
         public MyClient()
         {
-            dynamic expando = new ExpandoObject();
-            expando.Prop1 = "Test";
-            expando.Prop2 = 42L;
-            expando.Prop3 = Guid.NewGuid();
-            expando.Meth1 = Return<bool>.Arguments<int>(it => it > 5);
-            IMyInterfaceA myInterface = Impromptu.ActLike(expando);
-
             // Create random pipe names for each 
-            // string pipeName32 = PipeDream.GetUniquePipeName();
+            string pipeName32 = PipeDream.GetUniquePipeName();
             string pipeName64 = PipeDream.GetUniquePipeName();
 
             // Start the 32 and 64 bit servers
@@ -60,7 +38,7 @@ namespace ClientTest
             // Fetch some objects from the servers
             // MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32");
             // MyObject serverObject64 = remote64?.GetMyRemoteObject("Sam64");
-            // string serverObject32 = remote32?.GetMyRemoteObject("Carl32");
+            //string serverObject32 = remote32?.GetMyRemoteObject("Carl32");
             string serverObject64 = remote64?.GetMyRemoteObject("Sam64");
 
             // Print them!

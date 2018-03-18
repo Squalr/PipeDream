@@ -15,7 +15,7 @@ namespace ClientTest
 
         public MyServer(int parentProcessId, string pipeName)
         {
-            Console.WriteLine("Running " + (Environment.Is64BitProcess ? "64" : "32") + " bit server over pipe " + pipeName);
+            Console.WriteLine("SERVER " + (Environment.Is64BitProcess ? "64" : "32") + " -- Pipe: " + pipeName);
 
             this.InitializeAutoExit(parentProcessId);
 

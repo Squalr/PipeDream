@@ -6,7 +6,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("IPC client started");
+            Console.WriteLine("CLIENT");
 
             MyClient client = new MyClient();
 

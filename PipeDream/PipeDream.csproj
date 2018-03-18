@@ -7,13 +7,14 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0</DefineConstants>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ImpromptuInterface" Version="7.0.1-beta40" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0-preview1-26216-02" />
-    <PackageReference Include="System.CodeDom" Version="4.5.0-preview1-26216-02" />
+    <PackageReference Include="Moq" Version="4.8.2" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
