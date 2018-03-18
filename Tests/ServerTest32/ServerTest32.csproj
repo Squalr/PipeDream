@@ -7,11 +7,17 @@
     <TargetFramework>net462</TargetFramework>
     <ApplicationIcon />
     <StartupObject>ServerTest32.Program</StartupObject>
+    <PackageTags></PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>..\ClientTest\bin\Debug\netcoreapp2.0\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\ClientTest\bin\Release\netcoreapp2.0\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

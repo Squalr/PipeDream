@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Squalr.PipeDream</RootNamespace>
+    <Authors>Zachary Canann</Authors>
+    <Company>Anathena</Company>
+    <Description>Pipedream is an IPC/RPC library that supports .NET Standard
+
+For more info see https://github.com/Squalr/PipeDream</Description>
+    <RepositoryUrl>https://github.com/Squalr/PipeDream</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Squalr/PipeDream</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>IPC, RPC, .NET Standard, x86, x64, 32 bit, 64 bit</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
