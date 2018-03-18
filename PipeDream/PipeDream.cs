@@ -1,6 +1,5 @@
 ﻿namespace Squalr.PipeDream
 {
-    using Moq;
     using Squalr.PipeDream.Proxy;
     using System;
 
@@ -44,9 +43,7 @@
         /// <returns></returns>
         private static T BuildClientImplementationFromInterface<T>(string pipeName) where T : class
         {
-            // Use a mocking library to build out an instance of the type
-            // TODO: There are probably more efficient ways of doing this than a mocking library
-            return (T)ClientProxy.NewInstance(pipeName, Mock.Of<T>());
+            return (T)ClientProxy.NewInstance(pipeName, InterfaceObjectFactory.New<T>());
         }
 
         /// <summary>

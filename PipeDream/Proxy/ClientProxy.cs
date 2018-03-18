@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO.Pipes;
+    using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
@@ -49,12 +50,15 @@
             NamedPipeClientStream pipe = this.GetPipe(method);
             IFormatter formatter = new BinaryFormatter();
 
-            if (parameters.Length > 0)
+            if (parameters.Select(x => x).Where(x => x != null).Count() > 0)
             {
                 foreach (object param in parameters)
                 {
-                    Console.WriteLine("Param: " + param);
-                    formatter.Serialize(pipe, param);
+                    if (param != null)
+                    {
+                        Console.WriteLine("Param: " + param);
+                        formatter.Serialize(pipe, param);
+                    }
                 }
             }
             else
