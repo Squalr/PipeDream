@@ -6,7 +6,5 @@
 
         void VoidMethod();
         string NoParameters();
-
-        double MyProperty { get; set; }
     }
 }

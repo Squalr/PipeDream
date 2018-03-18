@@ -36,6 +36,9 @@ For a full example, check out the Tests directory. In order to run the tests, be
     IMySharedInterface instance = new SharedInterfaceImpl();
     PipeDream.ServerInitialize<IMySharedInterface>(instance, pipeName);
     
+## Advanced Topics:
+Serializing non-primitive objects simply requires annotating the class with `Serializeable` attributes.
+
 ## Known Issues:
 Currently this does not support interfaces with the `ref` or `out` keywords. Also, this does not support `properties` on interfaces.
 

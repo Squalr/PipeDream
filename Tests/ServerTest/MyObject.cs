@@ -11,11 +11,6 @@
 
         public double IQ { get; set; }
 
-        public MyObject()
-        {
-
-        }
-
         public MyObject(string name, int age, double iq)
         {
             this.Name = name;
