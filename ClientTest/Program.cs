@@ -7,6 +7,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("CLIENT");
+            Console.WriteLine("-----------------------------");
 
             MyClient client = new MyClient();
 

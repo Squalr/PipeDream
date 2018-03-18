@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClientTest
 {
-    public class MyServer : IMyInterface
+    public class MyServer : IMySharedInterface
     {
         /// <summary>
         /// The delay in milliseconds to check if the parent process is still running.
@@ -15,17 +15,18 @@ namespace ClientTest
 
         public MyServer(int parentProcessId, string pipeName)
         {
-            Console.WriteLine("SERVER " + (Environment.Is64BitProcess ? "64" : "32") + " -- Pipe: " + pipeName);
+            Console.WriteLine("SERVER " + (Environment.Is64BitProcess ? "64" : "32"));
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine("Pipe: " + pipeName);
 
             this.InitializeAutoExit(parentProcessId);
 
-            PipeDream.ServerInitialize<IMyInterface>(this, pipeName);
+            PipeDream.ServerInitialize<IMySharedInterface>(this, pipeName);
         }
 
-        public string GetMyRemoteObject(string name)
+        public MyObject GetMyRemoteObject(string name, int age, double iq)
         {
-            return name;
-            //return new MyObject(name, 32, 82.4);
+            return new MyObject(name, age, iq);
         }
 
         /// <summary>
@@ -36,14 +37,24 @@ namespace ClientTest
         {
             Task.Run(() =>
             {
+                Console.WriteLine("Initializing auto-exit");
+
                 while (true)
                 {
                     try
                     {
                         // Check if the process is still running
-                        Process.GetProcessById(parentProcessId);
+                        Process process = Process.GetProcessById(parentProcessId);
+
+                        // Could not find process
+                        if (process == null)
+                        {
+                            break;
+                        }
+
+                        Console.WriteLine(process);
                     }
-                    catch (ArgumentException)
+                    catch (Exception)
                     {
                         // Could not find process
                         break;
@@ -52,6 +63,7 @@ namespace ClientTest
                     Thread.Sleep(MyServer.ParentCheckDelayMs);
                 }
 
+                Console.WriteLine("Parent process not found -- exiting");
                 Environment.Exit(0);
             });
         }

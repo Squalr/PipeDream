@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Squalr.PipeDream;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Squalr.PipeDream;
 
 namespace ClientTest
 {
@@ -28,22 +28,22 @@ namespace ClientTest
             string pipeName64 = PipeDream.GetUniquePipeName();
 
             // Start the 32 and 64 bit servers
-            //this.StartServer(MyClient.Server32Executable, pipeName32);
+            this.StartServer(MyClient.Server32Executable, pipeName32);
             this.StartServer(MyClient.Server64Executable, pipeName64);
 
             // Create the piping
-            // IMyInterface remote32 = PipeDream.ClientInitialize<IMyInterface>(pipeName32);
-            IMyInterface remote64 = PipeDream.ClientInitialize<IMyInterface>(pipeName64);
+            IMySharedInterface remote32 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName32);
+            IMySharedInterface remote64 = PipeDream.ClientInitialize<IMySharedInterface>(pipeName64);
 
             // Fetch some objects from the servers
-            // MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32");
-            // MyObject serverObject64 = remote64?.GetMyRemoteObject("Sam64");
-            //string serverObject32 = remote32?.GetMyRemoteObject("Carl32");
-            string serverObject64 = remote64?.GetMyRemoteObject("Sam64");
+            MyObject serverObject32 = remote32?.GetMyRemoteObject("Carl32", 420, 69.0);
+            MyObject serverObject64 = remote64?.GetMyRemoteObject("Sam64", 19, 200.4);
+            MyObject serverObject64_2 = remote64?.GetMyRemoteObject("aaa", 22, 123.5);
 
             // Print them!
-            // Console.WriteLine("Server object (32-bit): " + serverObject32?.ToString());
+            Console.WriteLine("Server object (32-bit): " + serverObject32?.ToString());
             Console.WriteLine("Server object (64-bit): " + serverObject64?.ToString());
+            Console.WriteLine("Server object (64-bit): " + serverObject64_2?.ToString());
         }
 
         /// <summary>
